@@ -6,7 +6,7 @@
 /*   By: cacarval <cacarval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 15:13:20 by cacarval          #+#    #+#             */
-/*   Updated: 2023/09/28 14:11:32 by cacarval         ###   ########.fr       */
+/*   Updated: 2023/10/03 15:47:46 by cacarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	is_someone_dead_or_full(t_info *copy)
 		return (1);
 	}
 	else if (copy->philo->times_to_eat > 0
-		&& copy->eat_count >= copy->philo->times_to_eat)
+		&& copy->eat_count == copy->philo->times_to_eat)
 	{
 		copy->philo->ate_enough++;
-		if (copy->philo->ate_enough >= copy->philo->n_philos)
+		if (copy->philo->ate_enough == copy->philo->n_philos)
 		{
 			is_time_to_finish(copy, 1);
 			print_action(copy, FINISH);
