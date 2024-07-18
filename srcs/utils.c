@@ -6,7 +6,7 @@
 /*   By: cacarval <cacarval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:33:07 by cacarval          #+#    #+#             */
-/*   Updated: 2023/10/03 16:01:47 by cacarval         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:40:29 by cacarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	advance_time(t_info *copy, long long stop)
 
 	begin = get_time();
 	while (!is_time_to_finish(copy, 0) && (get_time() - begin) < stop)
-		usleep(100);
+		usleep(1000 * stop);
 }
 
 void	exit_error(t_philo *philo, char *msg, int n)

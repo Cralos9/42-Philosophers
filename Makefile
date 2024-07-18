@@ -6,7 +6,7 @@
 #    By: cacarval <cacarval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/04 12:44:54 by cacarval          #+#    #+#              #
-#    Updated: 2023/09/18 14:32:56 by cacarval         ###   ########.fr        #
+#    Updated: 2023/10/11 11:39:14 by cacarval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,14 +29,14 @@ RESET := \033[0m
 		${CC} ${CFLAGS} ${INCLUDE} -c $< -o ${<:.c=.o}
 
 $(NAME): ${OBJS}
-		${CC} ${CFLAGS} ${INCLUDE} ${OBJS} -o ${NAME} -pthread
+		${CC} ${CFLAGS} -fsanitize=thread ${INCLUDE} ${OBJS} -o ${NAME} -pthread
 		@echo "${GREEN}---./philo was created---${RESET}"
 
 all:	${NAME}
 
-sanitize: ${OBJS}
-		${CC} ${CFLAGS} -fsanitize=thread  ${INCLUDE} ${OBJS} -o ${NAME} -pthread
-		@echo "${GREEN}---./philo with sanitize was created---${RESET}"
+valgrind: ${OBJS}
+		${CC} ${CFLAGS} ${INCLUDE} ${OBJS} -o ${NAME} -pthread
+		@echo "${GREEN}---./philo without sanitize was created---${RESET}"
 
 
 clean:
