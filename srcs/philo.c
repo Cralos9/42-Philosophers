@@ -6,7 +6,7 @@
 /*   By: cacarval <cacarval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:44:57 by cacarval          #+#    #+#             */
-/*   Updated: 2023/09/28 14:08:05 by cacarval         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:45:53 by cacarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,18 @@ int	start_threads(t_philo *philo)
 	int	i;
 
 	i = -1;
+	pthread_mutex_lock(&philo->start_lock);
 	while (++i < philo->n_philos)
 	{
 		if (pthread_create(&philo->p_info[i].thread, NULL,
 				start_eating, &philo->p_info[i]))
 			exit_error(philo, RED"Couldn't create thread"RESET, 3);
 	}
+	philo->start_time = get_time();
+	i = -1;
+	while(++i < philo->n_philos)
+		philo->p_info[i].last_eat = philo->start_time;
+	pthread_mutex_unlock(&philo->start_lock);
 	return (0);
 }
 
@@ -36,6 +42,8 @@ void	start_locks(t_philo *philo)
 		if (pthread_mutex_init(&philo->fork_lock[i], NULL))
 			exit_error(philo, RED"Couldn't init fork mutex"RESET, 2);
 	}
+	if (pthread_mutex_init(&philo->start_lock, NULL))
+		exit_error(philo, RED"Couldn't init print mutex"RESET, 2);
 	if (pthread_mutex_init(&philo->print_lock, NULL))
 		exit_error(philo, RED"Couldn't init print mutex"RESET, 2);
 	if (pthread_mutex_init(&philo->eat_lock, NULL))
@@ -53,9 +61,9 @@ void	call_philosophers(t_philo *philo)
 	philo->fork_lock = malloc(sizeof(pthread_mutex_t) * philo->n_philos);
 	if (!philo->p_info || !philo->fork_lock)
 		exit_error(philo, RED"Couldn't create the philosophers"RESET, 1);
-	philo->start_time = get_time();
 	while (++i < philo->n_philos)
 	{
+		philo->start_time = get_time();
 		philo->p_info[i].id = i + 1;
 		philo->p_info[i].l_fork = i;
 		philo->p_info[i].r_fork = (i + 1) % philo->n_philos;

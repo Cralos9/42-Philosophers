@@ -6,7 +6,7 @@
 /*   By: cacarval <cacarval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:44:36 by cacarval          #+#    #+#             */
-/*   Updated: 2023/09/28 13:51:10 by cacarval         ###   ########.fr       */
+/*   Updated: 2024/08/20 12:52:57 by cacarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_philo
 	int				ate_enough;
 	t_info			*p_info;
 	pthread_mutex_t	*fork_lock;
+	pthread_mutex_t start_lock;
 	pthread_mutex_t	print_lock;
 	pthread_mutex_t	eat_lock;
 	pthread_mutex_t	finish_lock;

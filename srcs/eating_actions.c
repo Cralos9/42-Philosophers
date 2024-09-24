@@ -6,7 +6,7 @@
 /*   By: cacarval <cacarval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 15:13:20 by cacarval          #+#    #+#             */
-/*   Updated: 2023/10/11 12:32:06 by cacarval         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:46:06 by cacarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ void	time_to_eat(t_info *copy)
 	}
 	print_action(copy, TAKE);
 	print_action(copy, TAKE);
+	copy->last_eat = get_time();
 	print_action(copy, EAT);
 	copy->eat_count++;
-	copy->last_eat = get_time();
 	advance_time(copy, copy->philo->time_to_eat);
 	pthread_mutex_lock(&copy->philo->eat_lock);
 	pthread_mutex_unlock(&copy->philo->eat_lock);
@@ -90,6 +90,8 @@ void	*start_eating(void *ptr)
 	t_info	*copy;
 
 	copy = (t_info *) ptr;
+	pthread_mutex_lock(&copy->philo->start_lock);
+	pthread_mutex_unlock(&copy->philo->start_lock);
 	while (1)
 	{
 		if (copy->philo->n_philos == 1)
